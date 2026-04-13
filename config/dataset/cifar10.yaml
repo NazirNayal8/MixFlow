@@ -1,0 +1,2 @@
+name: cifar10
+root: ${oc.env:MIXFLOW_CIFAR10_ROOT,./datasets}

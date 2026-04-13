@@ -1,0 +1,50 @@
+# @package _global_
+
+defaults:
+  - override /dataset: ffhqv2
+  - override /model/scheduler: flow_matching
+  - override /model/denoiser: songunet_ffhq
+  - override /model/noise_predictor: unet_class_cond
+
+trainer:
+  val_check_interval: 2331
+  max_steps: 800_000
+
+model:
+  aux_losses:
+    - name: kl_divergence_gaussian
+      weight: 0.00005
+  use_noise_predictor: true
+  noise_predictor:
+    input_mode: sample_only
+    gaussian: true
+    gaussian_mode: mean_var
+
+
+train:
+  use_ema: true
+  ema_decay: 0.9999
+  activate_w_mode: true
+  interpolate_distrubutions: true
+  use_torch_compile: true
+
+optimizer:
+  name: Adam
+  lr: 0.0002
+  scheduler:
+    name: constant_with_warmup
+    num_warmup_steps: 39060
+
+data_loader:
+  train:
+    batch_size: 64 # per-gpu
+    num_workers: 4
+  val:
+    batch_size: 64
+    num_workers: 4
+  test:
+    batch_size: 64
+    num_workers: 10
+
+wandb:
+  project: diffusion-ffhq

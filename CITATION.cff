@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+title: "MixFlow: Mixed Source Distributions Improve Rectified Flows"
+message: "If you use this code, please cite the MixFlow paper."
+type: software
+authors:
+  - family-names: Nayal
+    given-names: Nazir
+  - family-names: Wewer
+    given-names: Christopher
+  - family-names: Lenssen
+    given-names: Jan Eric
+repository-code: "https://github.com/NazirNayal8/MixFlow"
+license: MIT

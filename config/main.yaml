@@ -1,0 +1,106 @@
+mode: train
+job_array: false
+output_dir: null # to be overwritten in code
+
+defaults:
+ - dataset: cifar10
+ - model/scheduler: flow_matching
+ - model/denoiser: songunet
+ - model/noise_predictor: unet_class_cond
+
+model:
+  use_noise_predictor: true
+  aux_losses: null
+
+train:
+  t_eps: null
+  discrete_t: false
+  use_cfg: false
+  cfg_scale: 0.3
+  cfg_p_cond: 0.1
+  use_ema: false
+  ema_decay: 0.9999
+  increasing_ema: false
+  use_torch_compile: true
+  class_conditional: false
+  activate_w_mode: false
+  discrete_w: false
+  interpolate_distrubutions: false
+  num_w_values: 1000
+  num_inference_timesteps: 50
+  log_predictions: true
+  log_predictions_interval: 50
+  optimized_fid: false
+  block_diffusion_gradient_to_noise_predictor: false
+
+
+test:
+  num_samples: 50000
+  num_inference_timesteps: 50
+  w: null
+  output_path: null
+  log_images: false
+  ode_solver: euler
+  use_scipy: false
+  optimized_fid: true
+  generate_for_fid: false
+  compute_is: false
+  curvature: false
+  curvature_cfg:
+    data_shape: [3, 32, 32]
+    num_classes: null
+
+trainer:
+  monitor_gradients: false
+  max_steps: 300_000
+  num_nodes: 1
+  val_check_interval: 2400
+  gradient_clip_val: null
+  num_sanity_val_steps: 2
+  limit_val_batches: 1.0
+  accumulate_grad_batches: 1
+  precision: null
+  profile: false
+  log_every_n_steps: 50
+  task_steps: -1
+
+wandb:
+  project: diffusion
+  mode: disabled # run for activating
+  id: null
+  entity: null
+  name: placeholder
+
+checkpointing:
+  every_n_train_steps: 1000
+  save_top_k: 1
+  load: null
+  resume: false
+
+optimizer:
+  name: AdamW
+  lr: 2.0e-5
+  scale_lr: false
+  scheduler:
+    name: cosine_with_warmup
+    frequency: 1
+    interval: step
+    num_warmup_steps: 5000
+
+data_loader:
+  train:
+    batch_size: 512
+    num_workers: 10
+    seed: null
+    persistent_workers: true
+  val:
+    batch_size: 128
+    num_workers: 10
+    seed: 1234
+  test:
+    batch_size: 64
+    num_workers: 10
+    seed: 1234
+  
+seed: 42
+  

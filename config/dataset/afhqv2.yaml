@@ -1,0 +1,3 @@
+name: afhqv2
+root: ${oc.env:MIXFLOW_AFHQV2_ROOT,./datasets/afhqv2-64x64}
+num_val_samples: 10000
