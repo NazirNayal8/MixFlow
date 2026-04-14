@@ -496,6 +496,7 @@ class DiffusionModel(LightningModule):
         if self.train_cfg.optimized_fid:
             self.FID = OptimizedFID(
                 dataset_name=self.trainer.datamodule.dataset_cfg.name,
+                cache_key="validation",
                 normalize=True,
             ).to(self.device)
         else:
@@ -567,6 +568,7 @@ class DiffusionModel(LightningModule):
         if self.test_cfg.optimized_fid:
             self.FID = OptimizedFID(
                 dataset_name=self.trainer.datamodule.dataset_cfg.name,
+                cache_key=f"test_{self.test_cfg.num_samples}_samples",
                 normalize=True,
             ).to(self.device)
         else:

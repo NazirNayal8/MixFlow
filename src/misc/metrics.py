@@ -16,14 +16,16 @@ class OptimizedFID(FrechetInceptionDistance):
     """
     def __init__(self, dataset_name: str,
                  stats_dir: str | Path = "./stats",
+                 cache_key: str | None = None,
                  *args, **kwargs):
 
         self.dataset_name = dataset_name
         self.stats_dir    = Path(stats_dir)
         self.stats_dir.mkdir(parents=True, exist_ok=True)
+        self.cache_key = cache_key or "default"
 
         # file that will hold npz with keys: mu, sigma, n
-        self.stats_file = self.stats_dir / f"{dataset_name}_fid_stats.npz"
+        self.stats_file = self.stats_dir / f"{dataset_name}_{self.cache_key}_fid_stats.npz"
 
         super().__init__(*args, **kwargs)            # build base metric
 

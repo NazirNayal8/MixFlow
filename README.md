@@ -251,6 +251,28 @@ FID-10k across sampling budgets:
 | Fast-ODE | 30 | 30.84 | 23.08 | 11.17 | 6.66 | 5.37 | 4.40 | 3.96 |
 | **MixFlow** | **5e-5** | **19.72** | **15.57** | **7.95** | **5.05** | **4.30** | **3.65** | **3.33** |
 
+## Reproducing Tables
+
+Use the preconfigured scripts below to reproduce the MixFlow rows reported in the tables above:
+
+```bash
+bash scripts/reproduce_cifar10_table.sh
+bash scripts/reproduce_ffhq_64x64_table.sh
+bash scripts/reproduce_afhqv2_64x64_table.sh
+```
+
+Each script writes per-run `metrics.json` files and a `summary.md` table under `outputs/main_results/<experiment>/`.
+
+SLURM wrappers are provided in `scripts/slurm/`:
+
+```bash
+sbatch scripts/slurm/reproduce_cifar10_table.slurm
+sbatch scripts/slurm/reproduce_ffhq_64x64_table.slurm
+sbatch scripts/slurm/reproduce_afhqv2_64x64_table.slurm
+```
+
+If your checkpoints are not stored under `checkpoints/`, set `CHECKPOINT=/path/to/model.ckpt` before launching the script or SLURM job.
+
 ## Citation
 
 If you use this code, please cite:
